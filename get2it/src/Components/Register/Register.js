@@ -4,6 +4,7 @@ import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { createUser } from '../../actions'
 import logo from '../Images/logo.png'
+import Spinner from '../Spinner/Spinner.js'
 
 class Register extends React.Component {
   constructor() {
@@ -42,25 +43,31 @@ class Register extends React.Component {
     const { isLoading, error } = this.props
 
     return (
-      <div className='register'>
-        <h3 className='pageTitle'>Sign up</h3>
-        <img className='registerLogo' src={logo} alt='get2it'/>
-        <form className='registerForm' onSubmit={this.handleSubmit}>
-          {error && <p className='error'>{error}</p>}
 
-          <div className='inputContainer'>
-            <label to='username'><i id='registerIcon' className="far fa-user-circle"></i></label>
-            <input type='text' id='username' name='username' placeholder='Username' value={username} onChange={this.handleChange} /><br />
-          </div>
-          <div className='inputContainer'>
-            <label to='password'><i id='registerIcon' className="fas fa-unlock-alt"></i></label>
-            <input type='password' id='password' name='password' placeholder='Password' value={password} onChange={this.handleChange} /><br />
-          </div>
+      <>
+        {isLoading ? <Spinner /> :
+          <div className='register'>
+            <h3 className='pageTitle'>Sign up</h3>
+            <img className='registerLogo' src={logo} alt='get2it'/>
+            <form className='registerForm' onSubmit={this.handleSubmit}>
+              {error && <p className='error'>{error}</p>}
 
-          {isLoading ? <p>Creating account, please wait...</p> : <button className='registerButton' type='submit'>Create Account</button>}
-        </form>
-        <p className='loginMessage'>ALREADY HAVE AN ACCOUNT? <Link className='loginLink' to='/login'> SIGN IN</Link></p>
-      </div>
+              <div className='inputContainer'>
+                <label to='username'><i id='registerIcon' className="far fa-user-circle"></i></label>
+                <input type='text' id='username' name='username' placeholder='Username' value={username} onChange={this.handleChange} /><br />
+              </div>
+              <div className='inputContainer'>
+                <label to='password'><i id='registerIcon' className="fas fa-unlock-alt"></i></label>
+                <input type='password' id='password' name='password' placeholder='Password' value={password} onChange={this.handleChange} /><br />
+              </div>
+
+              <button className='registerButton' type='submit'>Create Account</button>
+            </form>
+            <p className='loginMessage'>ALREADY HAVE AN ACCOUNT? <Link className='loginLink' to='/login'> SIGN IN</Link></p>
+          </div>
+        }
+      </>
+
     )
   }
 }

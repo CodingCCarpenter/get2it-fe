@@ -13,9 +13,12 @@ class Menu extends React.Component {
       dropdownOpen: false,
     }
   }
+  
   toggle = () => {
+    
     this.setState({
-      dropdownOpen: !this.state.dropdownOpen
+      dropdownOpen: !this.state.dropdownOpen,
+      userData: this.props.userData
     })
   }
 
@@ -86,6 +89,7 @@ class Menu extends React.Component {
 const mapStateToProps = state => ({
   userData: state.userData,
   userTasks: state.userTasks,
+  userID: state.userID,
 })
 
 export default withRouter(connect(mapStateToProps)(Menu))

@@ -1,7 +1,6 @@
 import React from 'react';
 import '../App.css';
 import { Route, withRouter } from 'react-router-dom'
-// import { connect } from 'react-redux'
 import PrivateRoute from './PrivateRoute/PrivateRoute.js'
 import Dashboard from './Dashboard/Dashboard.js'
 import Register from './Register/Register.js'
@@ -18,6 +17,7 @@ function App() {
       <PrivateRoute path='/profile' component={Dashboard} />
       <Route path='/login' component={Login} />
       <Route path='/register' component={Register} />
+      
     </div>
   );
 }
