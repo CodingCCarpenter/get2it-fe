@@ -1,4 +1,4 @@
-.completeTask {
+input[type=checkbox] {
     width: 40px;
     height:40px;
     border-radius: 50%;
@@ -21,14 +21,7 @@ div .form-group {
   border-bottom: 2px solid;
     width: 90%;
 }
-.formStyle:hover {
-background-color: rgb(75, 74, 74);
-width: 95%;
-border-radius: 15px;
-/* height:100%; */
-border: solid 1px rgb(158, 152, 152);
-padding:1px 10px 0px 10px;
-}
+
 .formStyle {
     margin-bottom: 5px;
 }
@@ -46,12 +39,7 @@ padding:1px 10px 0px 10px;
     text-align: center;
     height: 10%;
 }
-input[type=checkbox]:checked {
- border: 1px solid rgb(107, 218, 218);
- background-image: url("./check.png");
- background-size: cover;
- background-repeat: no-repeat;
-}
+
 .taskTitle {
     display: block;
     margin-top: .25rem;
@@ -77,12 +65,12 @@ input[type=checkbox]:checked {
     margin-left: 43%;
 padding: auto;
   }
-  .first {
-    background: green;
+  
+.reUseBtn {
+    width: 33%;
+    height: 10%;
+    padding: 2%;
 }
-
-.second {
-    background: orange;
+.reUseBtn:Hover {
+    opacity: 90%;
 }
-
-

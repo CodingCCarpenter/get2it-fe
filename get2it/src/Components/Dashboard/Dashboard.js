@@ -10,6 +10,7 @@ import TaskList from '../TaskList/index.js'
 import Profile from '../Profile/Profile.js'
 import Spinner from '../Spinner/Spinner.js'
 // import { getTASKS } from "../../actions.js";
+import CompletedTaskList from '../CompletedTaskList/index.js'
 
 
 class Dashboard extends React.Component {
@@ -20,27 +21,31 @@ class Dashboard extends React.Component {
 
   render() {
     return (
-      <>
-        {this.props.isLoading ? <Spinner /> :
-          <div className="dashboard">
-            <div className="nav">
-              <Menu />
-            </div>
-            <div className="appRoutes">
-              <Route
-                path="/onboarding"
-                render={props => <OnBoarding {...props} />}
-              />
+      <div className="dashboard">
+        <div className="nav">
+          <Menu />
+        </div>
 
-              <Route exact path="/" render={props => <Home {...props} />} />
-              <Route path="/NewTask" render={props => <NewTask {...props} />} />
-              <Route path="/taskList" render={props => <TaskList {...props} />} />
-              <Route path="/taskModal" render={props => <Home {...props} />} />
-              <Route path="/profile" render={props => <Profile {...props} />} />
-            </div>
+        {this.props.isLoading ? (
+          <p className="loading">Loading...</p>
+        ) : (
+          <div className="appRoutes">
+            <Route
+              path="/onboarding"
+              render={props => <OnBoarding {...props} />}
+            />
+
+            <Route exact path="/" render={props => <Home {...props} />} />
+            <Route path="/NewTask" render={props => <NewTask {...props} />} />
+            <Route path="/taskList" render={props => <TaskList {...props} />} />
+            <Route path="/taskModal" render={props => <Home {...props} />} />
+            <Route path="/profile" render={props => <Profile {...props} />} />
+            <Route path="/CompletedTaskList" render={props => <CompletedTaskList {...props} />} />
+            
           </div>
+        )
         }
-      </>
+      </div>
     );
   }
 }

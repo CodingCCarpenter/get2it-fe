@@ -70,6 +70,17 @@ class Menu extends React.Component {
           <DropdownItem
             onClick={evt => {
               evt.preventDefault();
+              this.props.history.push("/CompletedtaskList");
+            }}
+          >
+            <i className="fas fa-list icon"></i>
+            <div className="yourTasks">
+              Completed Tasks
+            </div>
+          </DropdownItem>
+          <DropdownItem
+            onClick={evt => {
+              evt.preventDefault();
               this.props.history.push("/profile");
             }}
           >

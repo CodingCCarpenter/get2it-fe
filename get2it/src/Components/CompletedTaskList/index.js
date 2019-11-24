@@ -5,18 +5,17 @@ import { Route, withRouter, Link } from 'react-router-dom'
 import { Form, Button } from 'react-bootstrap'
 import { updateTask, getTASKS } from '../../actions'
 
-// buld task component and set up state
-class TaskList extends React.Component {
+// buld completed task component and set up state
+class CompletedTaskList extends React.Component {
   constructor(props) {
     super(props);
     console.log(props)
-     // add tasklist to state
+    // add tasklist to state
     this.state= {taskList:[]
     }
   }
   event
-
-  // build function to add tasks to state
+// build function to add tasks to state
   createTaskList = event => {
     event.preventDefault();
     // pull tasks from props
@@ -24,9 +23,9 @@ class TaskList extends React.Component {
     const list =[]
     var listItem;
     var spacer = "      ";
-     // loop through each task and post them to state
+    // loop through each task and post them to state
     for (let i = 0; i < arrList.length;i++) {
-      if(arrList[i].status === false){
+      if(arrList[i].status === true){
         listItem = arrList[i].name.concat(spacer).concat(arrList[i].date)
         list.push(listItem)
       
@@ -41,7 +40,6 @@ class TaskList extends React.Component {
   toggleComplete = event => {
     
   }
-  
   create = event => {
     event.preventDefault();
     console.log('click');
@@ -49,22 +47,12 @@ class TaskList extends React.Component {
 
   };
 
-    // render content to page
+  // render content to page
   render() {
-    var container = document.querySelector('.completeTask');
-
-container.addEventListener('mouseenter', function(){
-        this.classList.remove('first');
-        this.classList.add('second');
-})
-container.addEventListener('mouseleave', function(){
-        this.classList.add('first');
-        this.classList.remove('second');
-})
     return (
       <div>
         <Form>
-          <Form.Text className="taskTitle">TASKS</Form.Text>
+          <Form.Text className="taskTitle">COMPLETED TASKS</Form.Text>
         </Form>
         <div>
           {/* for each item on the state tasklist create a task link on the page */}
@@ -73,8 +61,8 @@ container.addEventListener('mouseleave', function(){
             <li className="formStyle" key={index}>
               <Form >
                 <Form.Group controlId='formBasicCheckbox'>
-                  <Button className="completeTask" onClick={this.toggleComplete}></Button>
                   <Form.Text>{item}</Form.Text>
+                  <Button className="reUseBtn">Re-Use</Button>
                 </Form.Group>
               </Form>
             </li>
@@ -104,4 +92,4 @@ const mapDispatchToProps = {
   getTASKS
  }
 // export the Component
-export default connect(mapStateToProps, mapDispatchToProps)(TaskList)
+export default connect(mapStateToProps, mapDispatchToProps)(CompletedTaskList)
