@@ -13,13 +13,28 @@ dl, ol, ul {
     margin-top:5%;
     list-style:none; 
     text-align: left;
+    padding: 2px;
     border-image: radial-gradient(silver, black) 50;
+}
+.taskListContainer {
+  overflow: auto;
+  height: 100vh;
+  padding: 0px;
+}
+.taskListContainer::-webkit-scrollbar {
+  height: 20px;
+  width: 8px;
+}
+.taskListContainer::-webkit-scrollbar-thumb {
+  background: rgba(192, 192, 192, 0.281);
+  border-radius: 30px;
 }
 div .form-group {
     display: flex;
     border-image: radial-gradient(silver, black) 50;
   border-bottom: 2px solid;
     width: 90%;
+    margin-left: 5%;
 }
 .formStyle:hover {
 background-color: rgb(75, 74, 74);
@@ -65,7 +80,7 @@ input[type=checkbox]:checked {
     bottom: 10px;
     height: 48px;
     width: 48px;
-    padding-bottom: 12px;
+    padding-bottom: 1px;
     padding-left: 1px;
     background-color: dodgerblue;
     color: white;

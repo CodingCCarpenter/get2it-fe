@@ -21,6 +21,7 @@ class Home extends React.Component {
   incompleteTasks = this.props.userTasks.filter(task => task.status === false)
   
   render() {
+    console.log(this.today)
     const {time, todayList} = this
     return (
       <div className="home">
@@ -76,7 +77,7 @@ class Home extends React.Component {
         </div>
 
         <Link
-          className="addTaskLink"
+          id="addTaskLink"
           to={{ pathname: "/taskModal", state: { modal: true } }}
         >
           +

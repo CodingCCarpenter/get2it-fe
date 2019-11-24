@@ -21,7 +21,7 @@ class Profile extends React.Component {
     const payload = {
       id: this.props.userID,
       username: this.state.username,
-      password: this.props.userData.password
+      // password: this.props.userData.password
     }
 
     const id = this.props.userID

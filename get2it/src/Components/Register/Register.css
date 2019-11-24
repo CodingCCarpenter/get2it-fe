@@ -1,6 +1,17 @@
 .register {
   height: 100%;
-  max-width: 400px;
+  width: 100vw;
+  /* max-width: 400px; */
+  overflow: auto;
+  padding: 5px 20px;
+}
+.register::-webkit-scrollbar {
+  height: 20px;
+  width: 8px;
+}
+.register::-webkit-scrollbar-thumb {
+  background: rgba(192, 192, 192, 0.281);
+  border-radius: 30px;
 }
 .pageTitle {
   width: 100%;
@@ -78,4 +89,14 @@ p.loginMessage {
 }
 p {
   color: var(--textColor);
+}
+.error {
+  margin: 0;
+  padding: 2px 4px;
+  color: rgb(111, 255, 106);
+  background-color: rgba(255, 255, 255, 0.377);
+  border-radius: 10px;
+  /* -webkit-text-stroke: .3px black; */
+  font-weight: 700;
+  text-shadow: 2px 2px 3px black;
 }

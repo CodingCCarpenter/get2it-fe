@@ -9,41 +9,39 @@ import NewTask from '../NewTask/NewTask.js'
 import TaskList from '../TaskList/index.js'
 import Profile from '../Profile/Profile.js'
 import Spinner from '../Spinner/Spinner.js'
-// import { getTASKS } from "../../actions.js";
 import CompletedTaskList from '../CompletedTaskList/index.js'
+import { getTASKS } from "../../actions.js";
 
 
 class Dashboard extends React.Component {
 
-  // componentDidMount() {
-  //   this.props.getTASKS(this.props.userData.id);
-  // }
+  componentDidMount() {
+    this.props.getTASKS(this.props.userData.id);
+  }
 
   render() {
     return (
-      <div className="dashboard">
-        <div className="nav">
-          <Menu />
-        </div>
+      <div>
+        {this.props.isLoading ? <Spinner /> :
+          <div className="dashboard">
+            <div className="nav">
+              <Menu />
+            </div>
+            <div className="appRoutes">
+              <Route
+                path="/onboarding"
+                render={props => <OnBoarding {...props} />}
+              />
 
-        {this.props.isLoading ? (
-          <p className="loading">Loading...</p>
-        ) : (
-          <div className="appRoutes">
-            <Route
-              path="/onboarding"
-              render={props => <OnBoarding {...props} />}
-            />
-
-            <Route exact path="/" render={props => <Home {...props} />} />
-            <Route path="/NewTask" render={props => <NewTask {...props} />} />
-            <Route path="/taskList" render={props => <TaskList {...props} />} />
-            <Route path="/taskModal" render={props => <Home {...props} />} />
-            <Route path="/profile" render={props => <Profile {...props} />} />
-            <Route path="/CompletedTaskList" render={props => <CompletedTaskList {...props} />} />
-            
+              <Route exact path="/" render={props => <Home {...props} />} />
+              <Route path="/NewTask" render={props => <NewTask {...props} />} />
+              <Route path="/taskList" render={props => <TaskList {...props} />} />
+              <Route path="/taskModal" render={props => <Home {...props} />} />
+              <Route path="/profile" render={props => <Profile {...props} />} />
+              <Route path="/CompletedTaskList" render={props => <CompletedTaskList {...props} />} />
+            </div>
           </div>
-        )
+        
         }
       </div>
     );
@@ -57,7 +55,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  // getTASKS,
+  getTASKS,
 }
 
 export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Dashboard));

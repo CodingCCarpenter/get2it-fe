@@ -39,8 +39,10 @@ class Menu extends React.Component {
     }
   }
 
+  completeTasks = this.props.userTasks.filter(task => task.status === true)
+
   render() {
-    console.log(this.props)
+    console.log(this.completeTasks)
     return (
       <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
         <DropdownToggle className="dropButton">
@@ -58,10 +60,27 @@ class Menu extends React.Component {
           <DropdownItem
             onClick={evt => {
               evt.preventDefault();
+              this.props.history.push("/profile");
+            }}
+          >
+            <i className="fas fa-user-circle icon"></i>
+            Profile
+          </DropdownItem>
+          <DropdownItem
+            onClick={evt => {
+              evt.preventDefault();
+              this.props.history.push("/NewTask");
+            }}
+          >
+            <i className="fas fa-plus-circle icon"></i>Add a Task
+          </DropdownItem>
+          <DropdownItem
+            onClick={evt => {
+              evt.preventDefault();
               this.props.history.push("/taskList");
             }}
           >
-            <i className="fas fa-list icon"></i>
+            <i className="fas fa-list-alt icon"></i>
             <div className="yourTasks">
               Your Tasks
               <div className="menuTaskCount">{this.props.userTasks.length}</div>
@@ -70,22 +89,14 @@ class Menu extends React.Component {
           <DropdownItem
             onClick={evt => {
               evt.preventDefault();
-              this.props.history.push("/CompletedtaskList");
+              this.props.history.push("/CompletedTaskList");
             }}
           >
-            <i className="fas fa-list icon"></i>
+            <i className="fas fa-check-circle icon"></i>
             <div className="yourTasks">
               Completed Tasks
+              <div className="menuTaskCount">{this.completeTasks.length}</div>
             </div>
-          </DropdownItem>
-          <DropdownItem
-            onClick={evt => {
-              evt.preventDefault();
-              this.props.history.push("/profile");
-            }}
-          >
-            <i className="fas fa-user-circle icon"></i>
-            Profile
           </DropdownItem>
           <DropdownItem divider />
           <DropdownItem onClick={this.logout}>

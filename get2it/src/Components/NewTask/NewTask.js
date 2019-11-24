@@ -1,209 +1,225 @@
-import React, { Component,setState } from 'react';
-// import {M} from 'react-materialize'
-import './NewTask.css'
+import React, { Component } from "react";
+import { withRouter } from 'react-router-dom'
+import "./NewTask.css";
 // import 'bulma/css/bulma.css'
-import Clock from './clock';
+import Clock from "./StartTime";
+import Date from "./Date";
+import EndTime from "./EndTime";
+import Label from "./Label";
+import Category from "./Category";
+import { Dropdown, DropdownButton, Button } from "react-bootstrap";
+import { set } from "date-fns";
+import $ from "jquery";
+import JsxParser from "react-jsx-parser";
+import { connect } from 'react-redux'
+import { createTask } from '../../actions.js'
 
-const toDoTasks = [
-  {
-    name: 'Click "Create" to create new task',
-    completed: false
-  },
-  {
-    name: 'Click "Edit" to edit task',
-    completetd: false
-  },
-  {
-    name: 'Click "Delete" to remove task',
-    completed: false
-  },
-  {
-    name: "Click on task to mark as complete",
-    completed: false
+class NewTask extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      icon: "",
+      taskName: "",
+      newError: null
+    };
   }
-];
-class CreateItem extends Component {
-  handleCreate(e) {
-    e.preventDefault();
-    
-    if (!this.refs.newItemInput.value) {
-      alert('Please enter a task name.');
-      return;
-    } else if (this.props.toDoTasks.map(element => element.name).indexOf(this.refs.newItemInput.value) != -1) {
-      alert('This task already exists.');
-      this.refs.newItemInput.value = '';
-      return;
+  addIconOne = event => {
+    // console.log("yolo")
+    $("#iconOne").addClass("iconOne");
+    $("#iconTwo").addClass("iconTwo");
+    $("#iconThree").addClass("iconThree");
+    // $('#iconOne').removeClass("iconOne")
+  };
+
+  changeHandler = evt => {
+    evt.preventDefault();
+
+    this.setState({
+      [evt.target.name]: evt.target.value
+    });
+  };
+
+  handleSubmit = evt => {
+    evt.preventDefault()
+
+    const { icon, taskName } = this.state
+    const { createTask, date, start_time, end_time, userData, error } = this.props
+    const id = userData.id
+    const payload = {
+      task_icon: icon,
+      name: taskName,
+      date,
+      start_time,
+      end_time,
     }
-    
-    this.props.createItem(this.refs.newItemInput.value);
-    this.refs.newItemInput.value = '';
+
+    createTask(payload, id)
+      .then(() => {
+        this.props.history.push('/')
+      })
+      .catch(err => {
+        console.error(err);
+        this.setState({
+          newError: this.props.error
+        })
+      });
   }
   
+  addIconOne = event => {
+    $('#iconThree').addClass("iconThree")
+    $('#iconTwo').addClass("iconTwo")
+    $('#iconOne').removeClass("iconOne")
+
+    }
+    addIconTwo = event => {
+      // console.log("yolo")
+
+    $("#iconOne").addClass("iconOne");
+    $("#iconThree").addClass("iconThree");
+    $("#iconTwo").removeClass("iconTwo");
+  };
+  addIconThree = event => {
+    // console.log("yolo")
+
+    $("#iconOne").addClass("iconOne");
+    $("#iconTwo").addClass("iconTwo");
+    $("#iconThree").removeClass("iconThree");
+  };
+
   render() {
+    console.log(this.props)
     return (
-      <div className="create-new">
-        <form onSubmit={this.handleCreate.bind(this)}>
-          <input type="text" placeholder="New Task" ref="newItemInput" />
-          <button class="button is-primary">
-          <span class="fa fa-plus"></span>
-          </button>
+      <div className="newTaskContainer">
+        <br />
+        <br />
+        <h1 className="NewTask-Tittle"> Add New Task</h1>
+        <hr className="line" />
+        <br />
+        {/* <Category/> */}
+        <div className="calender-date">
+          <div className="startTime">
+            <i className="far fa-calendar-alt fa-3x" />
+          </div>
+          <br />
+          <br />
+
+          <Date className="date" />
+          <br />
+          <br />
+        </div>
+        <Clock />
+        <hr className="line" />
+
+        <EndTime />
+
+        <div className="app"></div>
+        <hr className="line" />
+        <form onSubmit={this.handleSubmit}>
+          <label className="newTaskLableName">New Task Name:</label>
+          <input
+            className="newTaskInput"
+            type="text"
+            name="taskName"
+            onChange={this.changeHandler}
+            required
+          />
+
+          <label className='newTaskLableName'>Pick an icon for your task!</label>
+          <div className='iconDropContainer'>
+            <div className="displayIcons">
+              <div id="iconOne">
+                <i
+                  id="icon"
+                  data-myval="1"
+                  className="fas fa-heartbeat iconDropdown"
+                ></i>
+              </div>
+              <div id="iconTwo">
+                <i
+                  id="icon"
+                  data-myval="2"
+                  className="fas fa-hospital iconDropdown"
+                ></i>
+              </div>
+              <div id="iconThree">
+                <i
+                  id="icon"
+                  data-myval="3"
+                  className="fab fa-accessible-icon iconDropdown"
+                ></i>
+              </div>
+            </div>
+            <DropdownButton id="dropdown-item-button" onClick={(evt) => {evt.preventDefault()}}>
+              <Dropdown.Item
+                onClick={this.addIcons}
+                className="addIcon"
+                onClick={() => {
+                  this.setState({
+                    icon:
+                      '<i id="icon" className="fas fa-heartbeat iconDropdown"></i>'
+                  });
+                  this.addIconOne();
+                }}
+                as="button"
+              >
+                <i id="icon" className="fas fa-heartbeat iconDropdown"></i>
+              </Dropdown.Item>
+              <Dropdown.Item
+                className="addIcon"
+                onClick={() => {
+                  this.setState({
+                    icon:
+                      '<i id="icon" className="fas fa-hospital iconDropdown"></i>'
+                  });
+                  this.addIconTwo();
+                }}
+                as="button"
+              >
+                <i id="icon" className="fas fa-hospital iconDropdown"></i>
+              </Dropdown.Item>
+              <Dropdown.Item
+                className="addIcon"
+                onClick={() => {
+                  this.setState({
+                    icon:
+                      '<i id="icon" className="fab fa-accessible-icon iconDropdown"></i>'
+                  });
+                  this.addIconThree();
+                }}
+                as="button"
+              >
+                <i id="icon" className="fab fa-accessible-icon iconDropdown"></i>
+              </Dropdown.Item>
+            </DropdownButton>
+            {/* <Label /> */}
+            <div>{/* <JsxParser jsx={this.state.icon} /> */}</div>
+          </div>
+          <hr className="line" />
+
+          {this.state.newError && (
+            <p className="error">{this.state.newError}</p>
+          )}
+          <Button className="completeBtn" type="submit">
+            Complete
+          </Button>
         </form>
       </div>
     );
   }
 }
 
-class TaskItems extends Component {
-  constructor(props) {
-    super(props);
-    
-    this.state = {
-      editing: false
-    };
-  }
-  
-  renderName() {
-    const itemStyle = {
-      'text-decoration': this.props.completed ? 'line-through' : 'none',
-      cursor: 'pointer'
-    };
-    
-    if(this.state.editing) {
-      return (
-          <form onSubmit={this.onSaveClick.bind(this)}>
-            <input type="text" ref="editInput" defaultValue={this.props.name} />
-          </form>
-      );
-    }
-    
-    return (
-      <span style={itemStyle} onClick={this.props.toggleComplete.bind(this, this.props.name)}>{this.props.name}</span>
-    );
-  }
-  
-  renderButtons() {
-    if (this.state.editing) {
-      return (
-        <span>
-          <button onClick={this.onSaveClick.bind(this)}>
-          <span class="fa fa-save"></span></button>
-          <button onClick={this.onCancelClick.bind(this)}><span class="fa fa-window-close"></span></button>
-        </span>
-      );
-    }
-    
-    return (
-      <span>
-        <button class="button is-primary" onClick={this.onEditClick.bind(this)}><span class="fa fa-edit"></span></button>
-        <button class="button is-danger" onClick={this.props.deleteItem.bind(this, this.props.name)}><span class="fa fa-trash"></span></button>
-      </span>
-    );
-  }
-  
-  onEditClick() {
-    this.setState({ editing: true });
-  }
-  
-  onCancelClick() {
-    this.setState({ editing: false });
-  }
-  
-  onSaveClick(e) {
-    e.preventDefault();
-    this.props.saveItem(this.props.name, this.refs.editInput.value);
-    this.setState({ editing: false });
-  }
-  
-  render() {
-    return (
-      <div className="to-do-item">
-        <span className="name">
-        {this.renderName()}
-        </span>
-        <span className="actions">
-        {this.renderButtons()}
-        </span>
-      </div>
-    );
-  }
-}
+const mapStateToProps = state => ({
+  userData: state.userData,
+  date: state.date,
+  start_time: state.start_time,
+  end_time: state.end_time,
+  isLoading: state.isLoading,
+  error: state.error
+});
 
-class ToDoList extends React.Component {
-  renderItems() {
-    return this.props.toDoTasks.map((item, index) => <TaskItems key={index} {...item} {...this.props} />);
-  }
-  
-  render() {
-    return (
-      <div className="items-list">
-        {this.renderItems()}
-      </div>
-    );
-  }
-}
+const mapDispatchToProps = {
+  createTask,
+};
 
-class NewTask extends React.Component {
-  constructor(props) {
-    super(props);
-    
-    this.state = {
-      toDoTasks
-    };
-  }
-  
-  createItem(item) {
-    this.state.toDoTasks.unshift({
-      name: item,
-      completed: false
-    });
-    this.setState({
-      toDoTasks: this.state.toDoTasks
-    });
-  }
-  
-  findItem(item) {
-    return this.state.toDoTasks.filter((element) => element.name === item)[0];
-  }
-  
-  toggleComplete(item) {
-    let selectedItem = this.findItem(item);
-    selectedItem.completed = !selectedItem.completed;
-    this.setState({ toDoTasks: this.state.toDoTasks });
-  }
-  
-  saveItem(oldItem, newItem) {
-    let selectedItem = this.findItem(oldItem);
-    selectedItem.name = newItem;
-    this.setState({ toDoTasks: this.state.toDoTasks });
-  }
-  
-  deleteItem(item) {
-    let index = this.state.toDoTasks.map(element => element.name).indexOf(item);
-    this.state.toDoTasks.splice(index, 1);
-    this.setState({ toDoTasks: this.state.toDoTasks });
-  }
-  
-  render() {
-    return (
-      <div className='app'>
-      <a class ="button is-primary"> 
-                <span class="icon">
-                </span>
-                <Clock/>
-                </a> 
-      <div className="to-do-app">
-        <div className="header">
-        
-          <h1>New Task</h1>
-        </div>
-        <CreateItem toDoTasks={this.state.toDoTasks} createItem={this.createItem.bind(this)} />
-        <ToDoList toDoTasks={this.state.toDoTasks} deleteItem={this.deleteItem.bind(this)} saveItem={this.saveItem.bind(this)} toggleComplete={this.toggleComplete.bind(this)} />
-      </div>
-      </div>
-    );
-  }
-}
-
-export default NewTask;
- 
-
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(NewTask));
