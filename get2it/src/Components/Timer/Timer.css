@@ -1,0 +1,64 @@
+.TimerCont {
+    
+    text-align: center;
+  }
+  
+
+.Timer-container {
+    display: flex;
+    flex-direction: row;
+    margin: 100px auto;
+    width: fit-content;
+    text-align: center;
+    color: white;
+  }
+  
+  .Bloc-timer {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-weight: bold;
+    font-size: 70px;
+  }
+  
+  .bloc-timer span {
+    font-weight: lighter;
+    font-size: 13px;
+    text-align: center;
+    color: #999999;
+  }
+  
+  .Button {
+    background-color: #3a4764;
+    border-radius: 6px;
+    width: 100px;
+    height: 40px;
+    margin-right: 10px;
+    padding: 5px;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    text-transform: uppercase;
+    border: solid 2px #feb333;
+  }
+  
+  .StartButton {
+    background-color: rgb(75, 75, 75);
+  }
+  
+  .PauseButton {
+    background-color: red;
+  }
+  
+  .Button:hover {
+    background-color: #feb333;
+  }
+  
+  .Button:active {
+    background-color: #616161;
+    transform: translateY(4px);
+    /* box-shadow: 0 4px #666; */
+  }
+  
