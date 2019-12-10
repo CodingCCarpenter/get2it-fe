@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React,{Component} from 'react';
 import './Timer.css';
 
-export default class Timer extends React.Component {
+ class Timer extends React.Component {
     state = {
       isActive: false,
       secondsElapsed: 0 / 1000 //time in seconds
@@ -67,3 +67,5 @@ export default class Timer extends React.Component {
       );
     }
   }
+
+  export default Timer;
