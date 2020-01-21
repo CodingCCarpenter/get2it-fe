@@ -29,3 +29,8 @@ $(document).ready( function() {
     var container = $('.page'), scrollTo = $('#'+h);
     container.animate({ scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop() - 70 }, 800);
   }
+  $("figure").mouseleave(
+    function() {
+      $(this).removeClass("hover");
+    }
+  );
